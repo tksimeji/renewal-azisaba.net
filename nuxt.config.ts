@@ -7,6 +7,7 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/mdc',
+    '@nuxtjs/tailwindcss',
     'vuetify-nuxt-module',
   ],
   css: [
