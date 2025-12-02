@@ -1,7 +1,11 @@
 <template>
   <nav class="navbar">
-    <div class="navbar-logo">
-      <NuxtLink to="/">アジ鯖</NuxtLink>
+    <div class="flex gap-2 items-center">
+      <img class="rounded-lg size-10" src="/icon.png" alt="Server Icon"/>
+      <div class="leading-none">
+        <NuxtLink class="font-semibold text-lg text-white" to="/">アジ鯖</NuxtLink>
+        <p class="text-[12px]">Azisaba Network</p>
+      </div>
     </div>
 
     <div class="navbar-right">
@@ -110,12 +114,6 @@ const menu_mouse_over =async (item, event)=>{
   background-color: #333;
   color: white;
   z-index: 1000;
-}
-
-.navbar-logo a {
-  font-size: 1.5rem;
-  color: white;
-  text-decoration: none;
 }
 
 .navbar-links {
