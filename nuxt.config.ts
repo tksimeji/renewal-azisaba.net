@@ -1,4 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from '@tailwindcss/vite';
+
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
@@ -7,8 +9,6 @@ export default defineNuxtConfig({
     '@nuxt/content',
     '@nuxt/image',
     '@nuxtjs/mdc',
-    '@nuxtjs/tailwindcss',
-    'vuetify-nuxt-module',
   ],
   css: [
     "bootstrap-icons/font/bootstrap-icons.css",
@@ -23,6 +23,9 @@ export default defineNuxtConfig({
     },
   },
   vite: {
+    plugins: [
+      tailwindcss(),
+    ],
     server: {
       watch: {
         usePolling: true,
@@ -62,17 +65,6 @@ export default defineNuxtConfig({
     '/server-intro/the-slow-life': {redirect: '/servers/the-slow-life'},
     '/server-intro/phantasy-gate': {redirect: '/servers/phantasy-gate'},
     '/join': {redirect: '/connect'},
-  },
-  vuetify: {
-    vuetifyOptions: {
-      components: [
-          'VCard', 'VCardItem', 'VCardActions', 'VCardText', 'VCardTitle', 'VCardSubtitle',
-          'VExpansionPanels', 'VExpansionPanel', 'VExpansionPanelTitle', 'VExpansionPanelText',
-          'VCarousel', 'VCarouselItem',
-      ],
-      labComponents: true,
-      directives: true,
-    },
   },
   ssr: true,
 })

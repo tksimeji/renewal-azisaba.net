@@ -1,3 +1,27 @@
+@import "tailwindcss";
+
+:root {
+  --deep-tail: rgb(43, 77, 84);
+  --slate-tail: rgb(76, 105, 107);
+  --soft-tail: rgb(120, 161, 161);
+  --pale-aqua: rgb(164, 214, 209);
+  --light-aqua: rgb(208, 241, 241);
+  --dark-tail-50: rgb(47, 53, 76);
+  --dark-tail-100: rgb(36, 40, 56);
+  --dark-tail-200: rgb(32, 35, 44);
+}
+
+@theme {
+  --color-azisaba-deep-tail: var(--deep-tail);
+  --color-azisaba-slate-tail: var(--slate-tail);
+  --color-azisaba-soft-tail: var(--soft-tail);
+  --color-azisaba-pale-aqua: var(--pale-aqua);
+  --color-azisaba-light-aqua: var(--light-aqua);
+  --color-azisaba-dark-tail-50: var(--dark-tail-50);
+  --color-azisaba-dark-tail-100: var(--dark-tail-100);
+  --color-azisaba-dark-tail-200: var(--dark-tail-200);
+}
+
 .v-card {
     position: inherit !important;
 }
@@ -10,11 +34,6 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-* {
-    margin: 0;
-    padding: 0;
 }
 
 body {
