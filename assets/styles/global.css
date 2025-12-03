@@ -1,6 +1,9 @@
 @import "tailwindcss";
 
 :root {
+  --dark-green: rgb(0, 117, 54);
+  --aqua: rgb(212, 233, 226);
+  --tan: rgb(247, 240, 228);
   --deep-tail: rgb(43, 77, 84);
   --slate-tail: rgb(76, 105, 107);
   --soft-tail: rgb(120, 161, 161);
@@ -12,6 +15,10 @@
 }
 
 @theme {
+  --color-azisaba-dark-green: var(--dark-green);
+  --color-azisaba-aqua: var(--aqua);
+  --color-azisaba-tan: var(--tan);
+
   --color-azisaba-deep-tail: var(--deep-tail);
   --color-azisaba-slate-tail: var(--slate-tail);
   --color-azisaba-soft-tail: var(--soft-tail);

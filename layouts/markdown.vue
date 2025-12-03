@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <NavigationBar />
+    <Header />
     <div class="content">
       <slot />
     </div>
@@ -17,10 +17,6 @@
 
 .content {
   flex: 1; /* flexに1つだけ数値を指定するとその要素は伸びる */
-}
-
-a {
-    color: cornflowerblue;
 }
 
 /* Base styles for all markdown content */
