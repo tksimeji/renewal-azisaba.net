@@ -2,19 +2,22 @@
 import {ref} from 'vue'
 import {LogInIcon, MapPinnedIcon} from 'lucide-vue-next';
 import {useRoute} from 'vue-router';
+import LoginModal from './LoginModal.vue';
+import Button from './Button.vue';
+
 
 const route = useRoute();
 
-const showLoginCard = ref(false)
+const showLoginModal = ref(false)
 const toggleLogin = () => {
-  showLoginCard.value = !showLoginCard.value
-}
+  showLoginModal.value = !showLoginModal.value;
+};
 
 const resetAll = () => {
   showMenu.value.forEach(item => {
     item.showMenu = false;
   });
-}
+};
 
 const rules = ref([
   {name: "利用規約", showChildren: false, to: "/rules/terms"},
@@ -63,58 +66,76 @@ const handleMenuMouseOver = async (item, event) => {
 </script>
 
 <template>
-  <nav class="bg-white mx-auto px-4 py-4 select-none shadow-sm w-screen">
-    <div class="flex gap-8 items-center justify-between">
-      <NuxtLink class="flex gap-4 items-center" to="/">
-        <img alt="Server Icon" class="rounded size-8" src="@/public/icon.png"/>
-        <div class="leading-none">
-          <h1 class="font-semibold text-lg">アジ鯖</h1>
-          <p class="text-[12px]">Azisaba Network</p>
-        </div>
-      </NuxtLink>
+  <div>
+    <nav class="bg-white mx-auto px-4 py-4 select-none shadow-sm w-screen">
+      <div class="flex gap-8 items-center justify-between">
+        <NuxtLink class="flex gap-4 items-center" to="/">
+          <img alt="Server Icon" class="rounded size-8" src="@/public/icon.png"/>
+          <div class="leading-none">
+            <h1 class="font-semibold text-lg">アジ鯖</h1>
+            <p class="text-[12px]">Azisaba Network</p>
+          </div>
+        </NuxtLink>
 
-      <ul class="flex gap-2 items-center" @mouseleave="resetAll()">
-        <li v-for="topLevelMenu in showMenu" :key="topLevelMenu.name">
-          <NuxtLink
-              class="font-semibold marker text-black/80 items-center hover:text-azisaba-dark-green/75"
-              :to="topLevelMenu.to"
-              @mouseover="handleMenuMouseOver(topLevelMenu, $event)"
-              exact
-          >
-            <MapPinnedIcon
-                v-if="route.path.startsWith(topLevelMenu.to) && topLevelMenu.to !== '/'"
-                class="text-azisaba-dark-green/75"
-                size="14"
-            />
-            <div v-else class="w-[14px] h-[14px]"></div>
+        <ul class="flex gap-2 items-center" @mouseleave="resetAll()">
+          <li v-for="topLevelMenu in showMenu" :key="topLevelMenu.name">
+            <NuxtLink
+                class="font-semibold marker text-black/80 items-center hover:text-azisaba-dark-green/75"
+                :to="topLevelMenu.to"
+                @mouseover="handleMenuMouseOver(topLevelMenu, $event)"
+                exact
+            >
+              <MapPinnedIcon
+                  v-if="route.path.startsWith(topLevelMenu.to) && topLevelMenu.to !== '/'"
+                  class="text-azisaba-dark-green/75"
+                  size="14"
+              />
+              <div v-else class="w-[14px] h-[14px]"></div>
 
-            <span class="en">{{ topLevelMenu.name }}</span>
-            <span class="jp">{{ topLevelMenu.jpName }}</span>
-          </NuxtLink>
-          <ul v-if="topLevelMenu.menu"
-              v-show="topLevelMenu.showMenu"
-              class="absolute bg-azisaba-tan flex flex-col gap-6 px-2 py-3 z-50">
-            <li v-for="subMenu in topLevelMenu.menu" :key="subMenu.name">
-              <NuxtLink class="font-semibold shadow-2xl text-black/70 text-md hover:underline" :to="subMenu.to" exact>
-                {{ subMenu.name }}
-              </NuxtLink>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              <span class="en">{{ topLevelMenu.name }}</span>
+              <span class="jp">{{ topLevelMenu.jpName }}</span>
+            </NuxtLink>
+            <ul v-if="topLevelMenu.menu"
+                v-show="topLevelMenu.showMenu"
+                class="absolute bg-azisaba-tan flex flex-col gap-6 px-2 py-3 z-50">
+              <li v-for="subMenu in topLevelMenu.menu" :key="subMenu.name">
+                <NuxtLink class="font-semibold shadow-2xl text-black/70 text-md hover:underline" :to="subMenu.to" exact>
+                  {{ subMenu.name }}
+                </NuxtLink>
+              </li>
+            </ul>
+          </li>
+        </ul>
 
-      <Button class="bg-black" @click="toggleLogin">
-        <LogInIcon size="18"/>
-        ログイン
-      </Button>
-    </div>
-  </nav>
+        <Button class="bg-black" @click="toggleLogin">
+          <LogInIcon size="18"/>
+          ログイン
+        </Button>
+      </div>
+    </nav>
+
+    <Transition name="fade">
+      <div
+          v-if="showLoginModal"
+          class="fixed inset-0 bg-black/50 z-[900]"
+          @click="toggleLogin">
+      </div>
+    </Transition>
+
+    <Transition name="slide-down-bounce">
+      <LoginModal
+          v-if="showLoginModal"
+          class="fixed top-0 left-1/2 -translate-x-1/2 z-[1000] mt-16"
+          @close="toggleLogin"
+      />
+    </Transition>
+  </div>
 </template>
 
 <style scoped>
 .marker {
   display: inline-block;
-  min-width:75px;
+  min-width: 75px;
   padding: 4px 6px;
   position: relative;
   text-align: center;
@@ -167,5 +188,28 @@ const handleMenuMouseOver = async (item, event) => {
 
 .marker:hover::after {
   transform: scaleX(1);
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.6s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-down-bounce-enter-active {
+  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slide-down-bounce-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.slide-down-bounce-enter-from,
+.slide-down-bounce-leave-to {
+  transform: translatey(-100%);
 }
 </style>
