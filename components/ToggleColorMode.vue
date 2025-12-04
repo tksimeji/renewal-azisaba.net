@@ -1,9 +1,9 @@
 <template>
   <div style="display: flex; align-items: center;">
-    <button @click="toggleColorMode" style="border: none; background: none; cursor: pointer;">
+    <primary-button @click="toggleColorMode" style="border: none; background: none; cursor: pointer;">
       <span v-if="currentMode && currentMode === 'dark'" style="font-size: 24px;"><i class="bi bi-moon"></i></span>
       <span v-else style="font-size: 24px;"><i class="bi bi-sun-fill"></i></span>
-    </button>
+    </primary-button>
   </div>
 </template>
 

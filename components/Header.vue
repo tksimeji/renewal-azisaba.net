@@ -3,8 +3,9 @@ import {ref} from 'vue'
 import {LogInIcon, MapPinnedIcon} from 'lucide-vue-next';
 import {useRoute} from 'vue-router';
 import LoginModal from './LoginModal.vue';
-import Button from './Button.vue';
+import PrimaryButton from './PrimaryButton.vue';
 
+const minecraftUuid = ref(null);
 
 const route = useRoute();
 
@@ -17,6 +18,20 @@ const resetAll = () => {
   showMenu.value.forEach(item => {
     item.showMenu = false;
   });
+};
+
+const fetchMe = async () => {
+  try {
+    const response = await fetch('http://localhost:8080/v1/auth/me', {
+      method: 'GET',
+      credentials: 'include',
+    });
+    if (response.ok) {
+      minecraftUuid.value = await response.text();
+    }
+  } catch (e) {
+    minecraftUuid.value = null;
+  }
 };
 
 const rules = ref([
@@ -63,6 +78,8 @@ const handleMenuMouseOver = async (item, event) => {
   resetAll()
   item.showMenu = true
 };
+
+fetchMe();
 </script>
 
 <template>
@@ -107,10 +124,11 @@ const handleMenuMouseOver = async (item, event) => {
           </li>
         </ul>
 
-        <Button class="bg-black" @click="toggleLogin">
+        <PrimaryButton v-if="minecraftUuid === null" class="bg-black" @click="toggleLogin">
           <LogInIcon size="18"/>
           ログイン
-        </Button>
+        </PrimaryButton>
+        <AccountManager v-else :minecraftUuid="minecraftUuid"/>
       </div>
     </nav>
 
